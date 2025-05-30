@@ -8,13 +8,16 @@
     android:backgroundTint="#00FFFFFF"
     android:orientation="vertical">
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="13dp" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="6dp"
-        app:cardBackgroundColor="@color/gris"
+        app:cardBackgroundColor="#CFCFCF"
         app:cardCornerRadius="30dp"
-        app:cardElevation="3dp">
+        app:cardElevation="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +28,7 @@
                 android:id="@+id/cardView18"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardBackgroundColor="#D3D3D3"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +39,7 @@
                 app:layout_constraintVertical_bias="0.0">
 
                 <LinearLayout
-                    android:layout_width="210dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="14dp"
                     android:background="#00FFFFFF"
@@ -59,7 +62,7 @@
                         android:id="@+id/textView14"
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:background="#ADADAD" />
+                        android:background="@color/gris" />
 
                     <Space
                         android:layout_width="match_parent"
@@ -71,6 +74,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/golos_text"
                         android:text="Categoria"
+                        android:textColor="@color/grisOscuro"
                         android:textSize="14sp" />
 
                     <Space
@@ -96,13 +100,15 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/golos_text"
                         android:text="Estado"
+                        android:textColor="@color/grisOscuro"
                         android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -114,7 +120,8 @@
                 <ImageView
                     android:id="@+id/imageViewHerramientaR2"
                     android:layout_width="90dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="90dp"
+                    android:layout_margin="15dp"
                     tools:srcCompat="@tools:sample/avatars" />
             </androidx.cardview.widget.CardView>
 

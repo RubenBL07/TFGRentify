@@ -22,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.069" />
 
     <ImageButton
         android:id="@+id/imageButtonBackDetHerr"
@@ -38,24 +38,26 @@
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.066" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView20"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69">
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="380dp"
-            android:layout_height="700dp">
+            android:layout_width="match_parent"
+            android:layout_height="720dp"
+            android:layout_margin="5dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonReservarDetHerr"
@@ -77,18 +79,18 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="#00FFFFFF"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/cardView19"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.081">
+                app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/imageViewDetHerr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
                     tools:srcCompat="@tools:sample/avatars" />
             </androidx.cardview.widget.CardView>
 
@@ -101,12 +103,13 @@
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.587">
+                app:layout_constraintVertical_bias="0.601">
 
                 <TableLayout
-                    android:layout_width="330dp"
+                    android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp">
 
@@ -121,6 +124,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Nombre:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -129,6 +133,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="Nombre"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -143,6 +148,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Categoría:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -151,6 +157,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="Categoria"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -165,6 +172,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Precio/Día:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -173,6 +181,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="Precio"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -187,14 +196,17 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Descripción:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
                             android:id="@+id/textViewDescripcionDetHerr"
-                            android:layout_width="wrap_content"
+                            android:layout_width="175dp"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
+                            android:singleLine="false"
                             android:text="Descripcion"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -209,6 +221,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Disponibilidad:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -217,6 +230,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="Disponibilidad"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
                 </TableLayout>

@@ -32,5 +32,6 @@ public interface ReservaApiService {
     @PUT("/api/reservas/update")
     public Call<Boolean> updateReserva(@Query("id") Long id, @Body Reserva reserva);
 
-
+    @PUT("/api/reservas/finalizar")
+    public Call<Boolean> finalizarReserva(@Query("id") Long id);
 }

@@ -42,8 +42,8 @@ public class HerramientasActivity extends AppCompatActivity {
         Cliente cliente = (Cliente) getIntent().getSerializableExtra("cliente");
 
         botonBilling = findViewById(R.id.imageButtonBillingHerr);
-        botonHome    = findViewById(R.id.imageButtonHomeHerr);
-        botonBack    = findViewById(R.id.imageButtonBackHerr);
+        botonHome = findViewById(R.id.imageButtonHomeHerr);
+        botonBack = findViewById(R.id.imageButtonBackHerr);
         recyclerHerramientas = findViewById(R.id.recyclerHerramientasHerr);
 
         recyclerHerramientas.setLayoutManager(new LinearLayoutManager(this));
@@ -55,34 +55,31 @@ public class HerramientasActivity extends AppCompatActivity {
         });
         recyclerHerramientas.setAdapter(adapter);
 
-        HerramientaApiService apiService = ApiClient.getRetrofit()
-                .create(HerramientaApiService.class);
+        HerramientaApiService apiService = ApiClient.getRetrofit().create(HerramientaApiService.class);
 
         apiService.getAllHerramientas().enqueue(new Callback<List<Herramienta>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
-            public void onResponse(@NonNull Call<List<Herramienta>> call,
-                                   @NonNull Response<List<Herramienta>> response) {
+            public void onResponse(@NonNull Call<List<Herramienta>> call, @NonNull Response<List<Herramienta>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     listaHerramientas.clear();
                     listaHerramientas.addAll(response.body());
                     adapter.notifyDataSetChanged();
                 } else {
                     Log.e("Herramientas", "Respuesta no exitosa");
-                    Toast.makeText(HerramientasActivity.this,
-                            "No hay herramientas disponibles", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(HerramientasActivity.this, "No hay herramientas disponibles", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Herramienta>> call, @NonNull Throwable t) {
                 Log.e("API_ERROR", "Error al llamar a API", t);
-                Toast.makeText(HerramientasActivity.this,
-                        "Error de conexión al cargar herramientas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HerramientasActivity.this, "Error de conexión al cargar herramientas", Toast.LENGTH_SHORT).show();
             }
         });
 
         botonBack.setOnClickListener(v -> finish());
+
         botonHome.setOnClickListener(v -> {
             Intent intent = new Intent(HerramientasActivity.this, HomeActivity.class);
             intent.putExtra("cliente", cliente);

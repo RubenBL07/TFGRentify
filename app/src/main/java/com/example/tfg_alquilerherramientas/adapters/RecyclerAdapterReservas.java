@@ -1,5 +1,6 @@
 package com.example.tfg_alquilerherramientas.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,13 +28,11 @@ public class RecyclerAdapterReservas extends RecyclerView.Adapter<RecyclerAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView textViewId;
         public TextView textViewHerramienta;
         public TextView textViewEstado;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewId = itemView.findViewById(R.id.textViewIdReservaR1);
             textViewHerramienta = itemView.findViewById(R.id.textViewHerramientaReservaR1);
             textViewEstado = itemView.findViewById(R.id.textViewEstadoReservaR1);
         }
@@ -50,13 +49,18 @@ public class RecyclerAdapterReservas extends RecyclerView.Adapter<RecyclerAdapte
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Reserva currentItem = items.get(position);
 
-        holder.textViewId.setText(String.valueOf(currentItem.getId()));
         holder.textViewHerramienta.setText(String.valueOf(currentItem.getHerramienta().getNombre()));
-        holder.textViewEstado.setText(currentItem.getEstado());
+        if(currentItem.getEstado().equals("ACTIVA")) {
+            holder.textViewEstado.setText(currentItem.getEstado()+"✅");
+        } else {
+            holder.textViewEstado.setText(currentItem.getEstado()+"⛔");
+
+        }
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {

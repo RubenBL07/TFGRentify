@@ -4,7 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import com.example.tfg_alquilerherramientas.retrofit.ApiClient;
 import com.example.tfg_alquilerherramientas.retrofit.ReservaApiService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
-    private TextView textoBienvenida, textoSaldo;
+    private TextView textoBienvenida;
     private ImageButton botonBack, botonAjustes, botonBuscar, botonBilling;
     private RecyclerView recyclerReservas;
     private RecyclerAdapterReservas adapter;
@@ -43,7 +46,6 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         textoBienvenida = findViewById(R.id.textViewBienvenidaH);
-        textoSaldo = findViewById(R.id.textViewSaldoH);
         botonBack = findViewById(R.id.imageButtonBackH);
         botonAjustes = findViewById(R.id.imageButtonAjustesH);
         botonBuscar = findViewById(R.id.imageButtonBuscarH);
@@ -53,64 +55,93 @@ public class HomeActivity extends AppCompatActivity {
         Cliente cliente = (Cliente) getIntent().getSerializableExtra("cliente");
         if (cliente != null) {
             textoBienvenida.append(" " + cliente.getNombre());
-            textoSaldo.setText(" "+cliente.getSaldo()+"€");
         } else {
             Toast.makeText(this, "Cliente no recibido", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        recyclerReservas.setLayoutManager(new LinearLayoutManager(this));
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerReservas.setLayoutManager(layoutManager);
         adapter = new RecyclerAdapterReservas(this, listaReservas, (item, position) -> {
             Intent intent = new Intent(HomeActivity.this, DetallesReservaActivity.class);
             intent.putExtra("reserva", item);
             intent.putExtra("herramienta", item.getHerramienta());
+            intent.putExtra("cliente", cliente);
             startActivity(intent);
         });
         recyclerReservas.setAdapter(adapter);
 
-        ReservaApiService reservaService = ApiClient.getRetrofit()
-                .create(ReservaApiService.class);
+        ReservaApiService reservaService = ApiClient.getRetrofit().create(ReservaApiService.class);
 
-        reservaService.getAllReservasByClienteId(cliente.getId())
-                .enqueue(new Callback<List<Reserva>>() {
-                    @Override
-                    public void onResponse(@NonNull Call<List<Reserva>> call,
-                                           @NonNull Response<List<Reserva>> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            listaReservas.clear();
-                            listaReservas.addAll(response.body());
-                            adapter.notifyDataSetChanged();
-                        } else {
-                            Log.e("Reservas", "Respuesta no exitosa");
-                            Toast.makeText(HomeActivity.this,
-                                    "No hay reservas disponibles", Toast.LENGTH_SHORT).show();
-                        }
+        reservaService.getAllReservasByClienteId(cliente.getId()).enqueue(new Callback<List<Reserva>>() {
+            @Override
+            public void onResponse(@NonNull Call<List<Reserva>> call, @NonNull Response<List<Reserva>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    listaReservas.clear();
+                    List<Reserva> reservas = response.body();
+                    if (reservas != null) {
+                        Collections.reverse(reservas);
+                        listaReservas.addAll(reservas);
+                        adapter.notifyDataSetChanged();
                     }
 
-                    @Override
-                    public void onFailure(@NonNull Call<List<Reserva>> call,
-                                          @NonNull Throwable t) {
-                        Log.e("API_ERROR", "Error al llamar a API", t);
-                        Toast.makeText(HomeActivity.this,
-                                        "Error de conexión al cargar reservas", Toast.LENGTH_SHORT)
-                                .show();
-                    }
-                });
+                } else {
+                    Log.e("Reservas", "Respuesta no exitosa");
+                    Toast.makeText(HomeActivity.this, "No hay reservas disponibles", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-        botonBack.setOnClickListener(v -> finish());
+            @Override
+            public void onFailure(@NonNull Call<List<Reserva>> call, @NonNull Throwable t) {
+                Log.e("API_ERROR", "Error al llamar a API", t);
+                Toast.makeText(HomeActivity.this, "Error de conexión al cargar reservas", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        botonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(v.getContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+
         botonBuscar.setOnClickListener(v -> {
             Intent i = new Intent(this, HerramientasActivity.class);
             i.putExtra("cliente", cliente);
             startActivity(i);
         });
+
         botonBilling.setOnClickListener(v -> {
             Intent i = new Intent(this, BillingActivity.class);
             i.putExtra("cliente", cliente);
             startActivity(i);
         });
+
         botonAjustes.setOnClickListener(v -> {
-            // TODO: implementar ajustes
+            PopupMenu popupMenu = new PopupMenu(HomeActivity.this, botonAjustes);
+            popupMenu.getMenu().add("Perfil");
+
+            if (cliente.getEmail().equals("admin@gmail.com") && cliente.getPassword().equals("admin")) {
+                popupMenu.getMenu().add("Crear herramienta");
+            }
+
+            popupMenu.setOnMenuItemClickListener(item -> {
+                String titulo = item.getTitle().toString();
+                if (titulo.equals("Perfil")) {
+                    Intent intent = new Intent(this, PerfilActivity.class);
+                    intent.putExtra("cliente", cliente);
+                    startActivity(intent);
+                    return true;
+                } else if (titulo.equals("Crear herramienta")) {
+                    Intent intent = new Intent(this, CrearHerramientaActivity.class);
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            });
+            popupMenu.show();
         });
     }
 }

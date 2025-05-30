@@ -10,8 +10,9 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView6"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,10 +20,10 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.054">
+        app:layout_constraintVertical_bias="0.064">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="380dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_margin="5dp">
 
@@ -76,20 +77,21 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView7"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.553">
+        app:layout_constraintVertical_bias="0.546">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="380dp"
-            android:layout_height="500dp"
+            android:layout_width="match_parent"
+            android:layout_height="550dp"
             android:layout_margin="5dp">
 
             <TextView
@@ -106,21 +108,31 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.044" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerReservasH"
-                android:layout_width="310dp"
-                android:layout_height="400dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.67" />
+                app:layout_constraintTop_toBottomOf="@+id/textView16">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerReservasH"
+                    android:layout_width="350dp"
+                    android:layout_height="450dp"
+                    android:layout_margin="5dp" />
+            </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -128,10 +140,10 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.925">
+        app:layout_constraintVertical_bias="0.96">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="380dp"
+            android:layout_width="match_parent"
             android:layout_height="75dp"
             android:layout_margin="5dp">
 
@@ -139,6 +151,7 @@
                 android:id="@+id/cardView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -162,6 +175,7 @@
                 android:id="@+id/cardView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="30dp"
                 app:cardElevation="2dp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -220,37 +234,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView6"
-        app:layout_constraintVertical_bias="0.307" />
-
-    <TextView
-        android:id="@+id/textViewBienvenida2H"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/golos_text_medium"
-        android:text="Saldo: "
-        android:textColor="@color/verde_oscuro"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/cardView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.371"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView6"
-        app:layout_constraintVertical_bias="0.8" />
-
-    <TextView
-        android:id="@+id/textViewSaldoH"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/golos_text_medium"
-        android:text="Saldo"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/cardView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/textViewBienvenida2H"
-        app:layout_constraintTop_toBottomOf="@+id/cardView6"
-        app:layout_constraintVertical_bias="0.866" />
+        app:layout_constraintVertical_bias="0.517" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

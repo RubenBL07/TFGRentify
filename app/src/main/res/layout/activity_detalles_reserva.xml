@@ -22,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.04" />
+        app:layout_constraintVertical_bias="0.069" />
 
     <ImageButton
         android:id="@+id/imageButtonBackDetRe"
@@ -38,22 +38,24 @@
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.048" />
+        app:layout_constraintVertical_bias="0.066" />
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="30dp"
         app:cardElevation="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.69">
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="375dp"
-            android:layout_height="700dp"
+            android:layout_width="match_parent"
+            android:layout_height="720dp"
             android:layout_margin="5dp">
 
             <com.google.android.material.button.MaterialButton
@@ -62,18 +64,20 @@
                 android:layout_height="60dp"
                 android:layout_marginBottom="44dp"
                 android:fontFamily="@font/golos_text_semibold"
-                android:text="Cancelar Reserva"
-                android:textColor="@color/white"
+                android:text="Finalizar Reserva"
+                android:textColor="#AB5858"
                 android:textSize="16sp"
-                app:backgroundTint="#9E4943"
+                app:backgroundTint="@color/white"
                 app:cornerRadius="30dp"
-                app:elevation="5dp"
+                app:elevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView99"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintVertical_bias="0.683"
+                app:strokeColor="#AA5757"
+                app:strokeWidth="5dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView99"
@@ -84,13 +88,13 @@
                 app:cardElevation="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.542"
+                app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.685">
+                app:layout_constraintVertical_bias="0.637">
 
                 <TableLayout
-                    android:layout_width="330dp"
+                    android:layout_width="350dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp">
 
@@ -105,6 +109,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Herramienta:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -113,6 +118,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="herramienta"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -127,6 +133,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Fecha de inicio:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -135,6 +142,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="fecha inicio"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -149,6 +157,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Fecha fin:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -157,6 +166,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="fecha fin"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -171,6 +181,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Precio/Día:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -179,6 +190,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="Precio dia"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -194,6 +206,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Estado:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <TextView
@@ -202,6 +215,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/golos_text"
                             android:text="Estado"
+                            android:textColor="@color/grisOscuro"
                             android:textSize="16sp" />
                     </TableRow>
 
@@ -218,11 +232,13 @@
                             android:layout_marginTop="7dp"
                             android:fontFamily="@font/golos_text_bold"
                             android:text="Precio total:"
+                            android:textColor="@color/black"
                             android:textSize="16sp" />
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            app:cardBackgroundColor="@color/white"
                             app:cardCornerRadius="30dp"
                             app:cardElevation="0dp">
 
@@ -233,6 +249,7 @@
                                 android:layout_margin="7dp"
                                 android:fontFamily="@font/golos_text"
                                 android:text="Precio total"
+                                android:textColor="@color/grisOscuro"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
                         </androidx.cardview.widget.CardView>
@@ -241,15 +258,23 @@
                 </TableLayout>
             </androidx.cardview.widget.CardView>
 
-            <ImageView
-                android:id="@+id/imageViewHerramientaDetRe"
-                android:layout_width="250dp"
-                android:layout_height="250dp"
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="0dp"
                 app:layout_constraintBottom_toTopOf="@+id/cardView99"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/back_background" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/imageViewHerramientaDetRe"
+                    android:layout_width="220dp"
+                    android:layout_height="220dp"
+                    app:srcCompat="@drawable/back_background" />
+            </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

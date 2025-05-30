@@ -63,7 +63,7 @@ public class RecyclerAdapterHerramientas extends RecyclerView.Adapter<RecyclerAd
 
         holder.textViewNombre.setText(currentItem.getNombre());
         holder.textViewCategoria.setText(String.valueOf(currentItem.getCategoria()));
-        holder.textViewPrecio.setText(String.valueOf(currentItem.getPrecioDia())+"€/día");
+        holder.textViewPrecio.setText(currentItem.getPrecioDia()+"€/día");
         holder.textViewEstado.setText(currentItem.getDisponible()?"Disponible ✅":"Reservada 🚫");
 
         if (currentItem.getImagenUrl() != null && !currentItem.getImagenUrl().isEmpty()) {

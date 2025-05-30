@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tfg_alquilerherramientas.R;
 import com.example.tfg_alquilerherramientas.modelos.Cliente;
+import com.example.tfg_alquilerherramientas.retrofit.ApiClient;
 import com.example.tfg_alquilerherramientas.retrofit.ClienteApiService;
 import com.google.android.material.button.MaterialButton;
 
@@ -47,9 +48,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email = slotEmail.getText().toString().trim();
                 String password = slotPassword.getText().toString();
-                Retrofit retrofit = new Retrofit.Builder().baseUrl("http://10.0.2.2:8080/")
-                        .addConverterFactory(GsonConverterFactory.create()).build();
-                ClienteApiService clienteApiService = retrofit.create(ClienteApiService.class);
+
+                ClienteApiService clienteApiService = ApiClient.getRetrofit().create(ClienteApiService.class);
                 Call<Cliente> call = clienteApiService.getClienteByEmail(email);
                 call.enqueue(new Callback<Cliente>() {
                     @Override
@@ -57,8 +57,7 @@ public class LoginActivity extends AppCompatActivity {
                         try{
                             if (response.isSuccessful()) {
                                 Cliente cliente = response.body();
-                                assert cliente != null;
-                                if(cliente.getPassword().equals(password) && cliente.getEmail().equals(email)){
+                                if (cliente != null && cliente.getPassword().equals(password)) {
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     intent.putExtra("cliente", cliente);
                                     startActivity(intent);
@@ -70,16 +69,16 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }catch (Exception ex){
                             Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
-
+                            Log.e("Login", "Excepción en onResponse", ex);
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<Cliente> call, Throwable t) {
                         Toast.makeText(LoginActivity.this, "Usuario no encontrado", Toast.LENGTH_SHORT).show();
+                        Log.e("Login", "onFailure", t);
                     }
                 });
-
             }
         });
 

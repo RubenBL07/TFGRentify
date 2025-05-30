@@ -3,6 +3,7 @@ package com.example.tfg_alquilerherramientas.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -44,48 +45,38 @@ public class RegisterActivity extends AppCompatActivity {
         botonBack.setOnClickListener(v -> finish());
 
         botonRegistrar.setOnClickListener(v -> {
-            String nombre    = slotNombre.getText().toString().trim();
-            String email     = slotEmail.getText().toString().trim();
-            String password  = slotPassword.getText().toString().trim();
+            String nombre = slotNombre.getText().toString().trim();
+            String email = slotEmail.getText().toString().trim();
+            String password = slotPassword.getText().toString().trim();
             String direccion = slotDireccion.getText().toString().trim();
 
-            if (nombre.isEmpty() || email.isEmpty() || password.isEmpty() || direccion.isEmpty()) {
+            if (nombre.isEmpty() || email.isEmpty() || password.isEmpty() || direccion.isEmpty() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(this, "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             Cliente nuevoCliente = new Cliente(nombre, email, password, direccion);
 
-            ClienteApiService clienteService =
-                    ApiClient.getRetrofit().create(ClienteApiService.class);
+            ClienteApiService clienteService = ApiClient.getRetrofit().create(ClienteApiService.class);
 
-            clienteService.postCliente(nuevoCliente)
-                    .enqueue(new Callback<Boolean>() {
-                        @Override
-                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                            if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
-                                Toast.makeText(RegisterActivity.this,
-                                                "Cliente creado correctamente", Toast.LENGTH_SHORT)
-                                        .show();
-                                startActivity(new Intent(
-                                        RegisterActivity.this,
-                                        LoginActivity.class));
-                                finish();
-                            } else {
-                                Toast.makeText(RegisterActivity.this,
-                                                "No se pudo crear el cliente", Toast.LENGTH_SHORT)
-                                        .show();
-                            }
-                        }
+            clienteService.postCliente(nuevoCliente).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
+                        Toast.makeText(RegisterActivity.this, "Cliente creado correctamente", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(RegisterActivity.this, "No se pudo crear el cliente", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
-                        @Override
-                        public void onFailure(Call<Boolean> call, Throwable t) {
-                            Toast.makeText(RegisterActivity.this,
-                                    "Error de conexión: " + t.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
-                            Log.e("API_ERROR", "Fallo en la red", t);
-                        }
-                    });
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast.makeText(RegisterActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("API_ERROR", "Fallo en la red", t);
+                }
+            });
         });
     }
 }

@@ -62,6 +62,10 @@ public class DetallesHerramientaActivity extends AppCompatActivity {
         textDescripcion.setText(herramienta.getDescripcion());
         textDisponible.setText(herramienta.getDisponible() ? "Disponible✅" : "Reservado🚫");
 
+        if(herramienta.getDisponible().equals(false)){
+            botonReservar.setVisibility(View.INVISIBLE);
+        }
+
         Glide.with(this)
                 .load(herramienta.getImagenUrl())
                 .placeholder(R.drawable.logo_background)
@@ -75,64 +79,47 @@ public class DetallesHerramientaActivity extends AppCompatActivity {
             textDisponible.setText("Reservado🚫");
             botonReservar.setEnabled(false);
 
-            Reserva nuevaReserva = new Reserva(cliente,
-                    herramienta,
-                    LocalDateTime.now(),
-                    "ACTIVA✅");
+            Reserva nuevaReserva = new Reserva(cliente, herramienta, LocalDateTime.now(), "ACTIVA");
 
-            ReservaApiService reservaService =
-                    ApiClient.getRetrofit().create(ReservaApiService.class);
+            ReservaApiService reservaService = ApiClient.getRetrofit().create(ReservaApiService.class);
 
-            reservaService.postReserva(nuevaReserva)
-                    .enqueue(new Callback<Boolean>() {
-                        @Override
-                        public void onResponse(Call<Boolean> call,
-                                               Response<Boolean> response) {
-                            if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
-                                HerramientaApiService herramientaService =
-                                        ApiClient.getRetrofit().create(HerramientaApiService.class);
-                                herramientaService.updateHerramienta(herramienta.getId(), herramienta)
-                                        .enqueue(new Callback<Boolean>() {
-                                            @Override
-                                            public void onResponse(Call<Boolean> call, Response<Boolean> resp2) {
-                                                if (resp2.isSuccessful() && Boolean.TRUE.equals(resp2.body())) {
-                                                    Toast.makeText(DetallesHerramientaActivity.this,
-                                                                    "Reserva completada", Toast.LENGTH_SHORT)
-                                                            .show();
-                                                    Intent intent = new Intent(
-                                                            DetallesHerramientaActivity.this,
-                                                            HomeActivity.class);
-                                                    intent.putExtra("cliente", cliente);
-                                                    startActivity(intent);
-                                                } else {
-                                                    Toast.makeText(DetallesHerramientaActivity.this,
-                                                            "Reserva fallida", Toast.LENGTH_SHORT).show();
-                                                    revertirEstado();
-                                                }
-                                            }
-                                            @Override
-                                            public void onFailure(Call<Boolean> call, Throwable t) {
-                                                Toast.makeText(DetallesHerramientaActivity.this,
-                                                        "Algo ha fallado", Toast.LENGTH_SHORT).show();
-                                                revertirEstado();
-                                            }
-                                        });
-                            } else {
-                                Toast.makeText(DetallesHerramientaActivity.this,
-                                        "Error de conexión", Toast.LENGTH_SHORT).show();
-                                Log.e("NETWORK_FAILURE", "Error: " + response);
+            reservaService.postReserva(nuevaReserva).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
+                        HerramientaApiService herramientaService = ApiClient.getRetrofit().create(HerramientaApiService.class);
+                        herramientaService.updateHerramienta(herramienta.getId(), herramienta).enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> resp2) {
+                                if (resp2.isSuccessful() && Boolean.TRUE.equals(resp2.body())) {
+                                    Toast.makeText(DetallesHerramientaActivity.this, "Reserva completada", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(DetallesHerramientaActivity.this, HomeActivity.class);
+                                    intent.putExtra("cliente", cliente);
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(DetallesHerramientaActivity.this, "Reserva fallida", Toast.LENGTH_SHORT).show();
+                                    revertirEstado();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                Toast.makeText(DetallesHerramientaActivity.this, "Algo ha fallado", Toast.LENGTH_SHORT).show();
                                 revertirEstado();
                             }
-                        }
-                        @Override
-                        public void onFailure(Call<Boolean> call, Throwable t) {
-                            Toast.makeText(DetallesHerramientaActivity.this,
-                                    "Fallo de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                            revertirEstado();
-                        }
-                    });
+                        });
+                    } else {
+                        Toast.makeText(DetallesHerramientaActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
+                        Log.e("NETWORK_FAILURE", "Error: " + response);
+                        revertirEstado();
+                    }
+                }
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast.makeText(DetallesHerramientaActivity.this, "Fallo de red: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    revertirEstado();
+                }
+            });
         });
-
         botonBack.setOnClickListener(v -> finish());
     }
 
