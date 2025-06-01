@@ -58,11 +58,59 @@
             android:layout_height="720dp"
             android:layout_margin="5dp">
 
+            <TextView
+                android:id="@+id/textView29"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/golos_text_semibold"
+                android:text="DAR DE BAJA"
+                android:textAlignment="center"
+                android:textColor="@color/grisOscuro"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.055" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/golos_text_semibold"
+                android:text="DAR DE ALTA"
+                android:textAlignment="center"
+                android:textColor="@color/grisOscuro"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.428" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="360dp"
+                android:layout_height="2dp"
+                android:background="@color/gris"
+                android:fontFamily="@font/golos_text_semibold"
+                android:textAlignment="center"
+                android:textColor="@color/grisOscuro"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.35" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonDarDeBaja"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_marginBottom="548dp"
+                android:layout_marginBottom="500dp"
                 android:fontFamily="@font/golos_text_semibold"
                 android:text="Dar de Baja"
                 android:textColor="@color/white"
@@ -72,7 +120,6 @@
                 app:elevation="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardView19"
                 app:layout_constraintVertical_bias="0.454" />
@@ -81,7 +128,7 @@
                 android:id="@+id/buttonDarDeAlta"
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
-                android:layout_marginBottom="344dp"
+                android:layout_marginBottom="248dp"
                 android:fontFamily="@font/golos_text_semibold"
                 android:text="Dar de Alta"
                 android:textColor="@color/white"
@@ -104,10 +151,10 @@
                 app:cardElevation="5dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintHorizontal_bias="0.489"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.061">
+                app:layout_constraintVertical_bias="0.143">
 
                 <Spinner
                     android:id="@+id/spinnerBaja"
@@ -129,7 +176,7 @@
                 app:layout_constraintHorizontal_bias="0.489"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.357">
+                app:layout_constraintVertical_bias="0.517">
 
                 <Spinner
                     android:id="@+id/spinnerAlta"
