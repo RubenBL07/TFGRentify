@@ -30,11 +30,16 @@ public class RecyclerAdapterReservas extends RecyclerView.Adapter<RecyclerAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewHerramienta;
         public TextView textViewEstado;
+        public TextView textViewFechaInicio;
+        public TextView textViewFechaFin;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textViewHerramienta = itemView.findViewById(R.id.textViewHerramientaReservaR1);
             textViewEstado = itemView.findViewById(R.id.textViewEstadoReservaR1);
+            textViewFechaInicio = itemView.findViewById(R.id.textViewFechaInicioR1);
+            textViewFechaFin = itemView.findViewById(R.id.textViewFechaFinR1);
+
         }
     }
 
@@ -59,7 +64,13 @@ public class RecyclerAdapterReservas extends RecyclerView.Adapter<RecyclerAdapte
             holder.textViewEstado.setText(currentItem.getEstado()+"✅");
         } else {
             holder.textViewEstado.setText(currentItem.getEstado()+"⛔");
+        }
 
+        holder.textViewFechaInicio.setText(String.valueOf(currentItem.getFechaInicio()).substring(0,16).replace("T", " "));
+        if (currentItem.getFechaFin() != null) {
+            holder.textViewFechaFin.setText(String.valueOf(currentItem.getFechaFin()).substring(0,16).replace("T", " "));
+        } else {
+            holder.textViewFechaFin.setText("-");
         }
 
         holder.itemView.setOnClickListener(v -> {

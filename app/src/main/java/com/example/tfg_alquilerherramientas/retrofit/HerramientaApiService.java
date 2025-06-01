@@ -27,4 +27,16 @@ public interface HerramientaApiService {
 
     @PUT("/api/herramientas/update")
     public Call<Boolean> updateHerramienta(@Query("id") Long id, @Body Herramienta herramienta);
+
+    @GET("/api/herramientas/findAllActivas")
+    public Call<List<Herramienta>> getAllHerramientasActivas();
+
+    @GET("/api/herramientas/findAllInactivas")
+    public Call<List<Herramienta>> getAllHerramientasInactivas();
+
+    @PUT("/api/herramientas/darDeBaja")
+    public Call<Boolean> darDeBajaHerramienta(@Query("id") Long id);
+
+    @PUT("/api/herramientas/reactivar")
+    public Call<Boolean> reactivarHerramienta(@Query("id") Long id);
 }

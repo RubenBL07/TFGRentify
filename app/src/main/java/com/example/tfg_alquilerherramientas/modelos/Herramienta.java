@@ -11,6 +11,7 @@ public class Herramienta implements Serializable {
     private String categoria;
     private Boolean disponible;
     private String imagenUrl;
+    private Boolean activa;
 
     public Herramienta(Long id, String nombre, String descripcion, BigDecimal precioDia, String categoria, Boolean disponible, String imagenUrl) {
         this.id = id;
@@ -20,6 +21,16 @@ public class Herramienta implements Serializable {
         this.categoria = categoria;
         this.disponible = disponible;
         this.imagenUrl = imagenUrl;
+    }
+
+    public Herramienta(String nombre, String descripcion, BigDecimal precioDia, String categoria, Boolean disponible, String imagenUrl) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precioDia = precioDia;
+        this.categoria = categoria;
+        this.disponible = disponible;
+        this.imagenUrl = imagenUrl;
+
     }
 
     public Long getId() {
@@ -76,5 +87,13 @@ public class Herramienta implements Serializable {
 
     public void setImagenUrl(String imagenUrl) {
         this.imagenUrl = imagenUrl;
+    }
+
+    public Boolean getActiva() {
+        return activa;
+    }
+
+    public void setActiva(Boolean activa) {
+        this.activa = activa;
     }
 }

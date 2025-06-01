@@ -1,8 +1,10 @@
 package com.example.tfg_alquilerherramientas.retrofit;
 
+import com.example.tfg_alquilerherramientas.modelos.Cliente;
 import com.example.tfg_alquilerherramientas.modelos.Herramienta;
 import com.example.tfg_alquilerherramientas.modelos.Reserva;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import retrofit2.Call;
@@ -34,4 +36,5 @@ public interface ReservaApiService {
 
     @PUT("/api/reservas/finalizar")
     public Call<Boolean> finalizarReserva(@Query("id") Long id);
+
 }

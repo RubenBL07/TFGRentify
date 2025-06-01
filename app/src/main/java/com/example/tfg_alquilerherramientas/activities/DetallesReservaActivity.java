@@ -7,15 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.example.tfg_alquilerherramientas.R;
@@ -23,6 +19,7 @@ import com.example.tfg_alquilerherramientas.modelos.Cliente;
 import com.example.tfg_alquilerherramientas.modelos.Herramienta;
 import com.example.tfg_alquilerherramientas.modelos.Reserva;
 import com.example.tfg_alquilerherramientas.retrofit.ApiClient;
+import com.example.tfg_alquilerherramientas.retrofit.ClienteApiService;
 import com.example.tfg_alquilerherramientas.retrofit.ReservaApiService;
 import com.google.android.material.button.MaterialButton;
 
@@ -71,77 +68,92 @@ public class DetallesReservaActivity extends AppCompatActivity {
                 .into(imagenHerramienta);
 
         textNombreHerramienta.setText(herramienta.getNombre());
-
-        textFechaInicio.setText(String.valueOf(reserva.getFechaInicio()).substring(0,10));
+        textFechaInicio.setText(String.valueOf(reserva.getFechaInicio()).substring(0, 16).replace("T", " "));
         if (reserva.getFechaFin() != null) {
-            textFechaFin.setText(String.valueOf(reserva.getFechaFin()).substring(0,10));
+            textFechaFin.setText(String.valueOf(reserva.getFechaFin()).substring(0, 16).replace("T", " "));
         } else {
             textFechaFin.setText("-");
         }
 
-        textPrecioDia.setText(herramienta.getPrecioDia()+"€");
+        textPrecioDia.setText(herramienta.getPrecioDia() + "€");
 
         if (reserva.getEstado().equals("ACTIVA")) {
-            textEstado.setText(reserva.getEstado()+"✅");
+            textEstado.setText(reserva.getEstado() + "✅");
             botonCancelarReserva.setEnabled(true);
             botonCancelarReserva.setVisibility(View.VISIBLE);
         } else {
-            textEstado.setText(reserva.getEstado()+"❌");
+            textEstado.setText(reserva.getEstado() + "❌");
             botonCancelarReserva.setEnabled(false);
             botonCancelarReserva.setVisibility(View.INVISIBLE);
         }
-        if(reserva.getEstado().equals("ACTIVA")){
-            long dias = ChronoUnit.DAYS.between(LocalDateTime.now(), reserva.getFechaInicio());
-            if (dias <= 0) {
-                dias = 1;
-            }
 
-            textPrecioTotal.setText((herramienta.getPrecioDia().multiply(BigDecimal.valueOf(dias)))+"€");
-        }else{
-            textPrecioTotal.setText(reserva.getPrecioTotal()+"€");
+        if (reserva.getEstado().equals("ACTIVA")) {
+            long dias = ChronoUnit.DAYS.between(reserva.getFechaInicio(), LocalDateTime.now());
+            if (dias <= 0) dias = 1;
+            BigDecimal total = herramienta.getPrecioDia().multiply(BigDecimal.valueOf(dias));
+            textPrecioTotal.setText(total + "€");
+        } else {
+            textPrecioTotal.setText(reserva.getPrecioTotal() + "€");
         }
 
         botonBack.setOnClickListener(v -> finish());
 
-        botonCancelarReserva.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String estadoAnterior = reserva.getEstado();
-                reserva.setEstado("FINALIZADA");
-                textEstado.setText(estadoAnterior);
-                botonCancelarReserva.setEnabled(false);
+        botonCancelarReserva.setOnClickListener(v -> {
+            String estadoAnterior = reserva.getEstado();
+            reserva.setEstado("FINALIZADA");
 
-                ReservaApiService apiService = ApiClient.getRetrofit().create(ReservaApiService.class);
+            long dias = ChronoUnit.DAYS.between(reserva.getFechaInicio(), LocalDateTime.now());
+            if (dias <= 0) dias = 1;
+            BigDecimal total = herramienta.getPrecioDia().multiply(BigDecimal.valueOf(dias));
 
-                apiService.finalizarReserva(reserva.getId()).enqueue(new Callback<Boolean>() {
-                    @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
-                            Toast.makeText(DetallesReservaActivity.this, "Reserva finalizada correctamente", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(DetallesReservaActivity.this, HomeActivity.class);
-                            intent.putExtra("herramienta", herramienta);
-                            intent.putExtra("cliente", cliente);
-                            startActivity(intent);
-                        } else {
-                            try {
-                                String error = response.errorBody() != null ? response.errorBody().string() : "<vacío>";
-                                Log.e("FinalizarReserva", "Código: " + response.code() + ", errorBody: " + error);
-                            } catch (Exception e) {
-                                Log.e("FinalizarReserva", "No se pudo leer errorBody", e);
+            reserva.setPrecioTotal(total);
+            cliente.setSaldo(cliente.getSaldo().subtract(total));
+
+            ReservaApiService reservaService = ApiClient.getRetrofit().create(ReservaApiService.class);
+            ClienteApiService clienteService = ApiClient.getRetrofit().create(ClienteApiService.class);
+
+            reservaService.finalizarReserva(reserva.getId()).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
+                        clienteService.updateSaldoCliente(cliente.getId(), cliente.getSaldo()).enqueue(new Callback<Boolean>() {
+                            @Override
+                            public void onResponse(Call<Boolean> call, Response<Boolean> respSaldo) {
+                                if (respSaldo.isSuccessful()) {
+                                    Log.d("SALDO", "Saldo actualizado correctamente");
+                                    Toast.makeText(DetallesReservaActivity.this, "Reserva finalizada con éxito", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Log.e("SALDO", "Error al actualizar saldo, código: " + respSaldo.code());
+                                    Toast.makeText(DetallesReservaActivity.this, "Fallo al actualizar saldo", Toast.LENGTH_SHORT).show();
+                                }
+                                lanzarHome();
                             }
-                            Toast.makeText(DetallesReservaActivity.this, "No se pudo finalizar la reserva (código " + response.code() + ")", Toast.LENGTH_LONG).show();
-                            revertirEstadoLocal(estadoAnterior);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
-                        Toast.makeText(DetallesReservaActivity.this, "Error de conexión al finalizar", Toast.LENGTH_SHORT).show();
+                            @Override
+                            public void onFailure(Call<Boolean> call, Throwable t) {
+                                Log.e("SALDO", "Fallo de red al actualizar saldo", t);
+                                Toast.makeText(DetallesReservaActivity.this, "Error de conexión al actualizar saldo", Toast.LENGTH_SHORT).show();
+                                lanzarHome();
+                            }
+                        });
+                    } else {
+                        Toast.makeText(DetallesReservaActivity.this, "Error al finalizar reserva", Toast.LENGTH_SHORT).show();
                         revertirEstadoLocal(estadoAnterior);
                     }
-                });
-            }
+                }
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast.makeText(DetallesReservaActivity.this, "Error de conexión al finalizar", Toast.LENGTH_SHORT).show();
+                    revertirEstadoLocal(estadoAnterior);
+                }
+            });
         });
+    }
+
+    private void lanzarHome() {
+        Intent intent = new Intent(DetallesReservaActivity.this, HomeActivity.class);
+        intent.putExtra("herramienta", herramienta);
+        intent.putExtra("cliente", cliente);
+        startActivity(intent);
     }
 
     private void revertirEstadoLocal(String estadoPrevio) {

@@ -22,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.069" />
+        app:layout_constraintVertical_bias="0.056" />
 
     <ImageButton
         android:id="@+id/imageButtonBackDetHerr"
@@ -38,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.054" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView20"
@@ -56,7 +56,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="720dp"
+            android:layout_height="740dp"
             android:layout_margin="5dp">
 
             <com.google.android.material.button.MaterialButton
@@ -85,7 +85,8 @@
                 app:layout_constraintBottom_toTopOf="@+id/cardView19"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.2900000">
 
                 <ImageView
                     android:id="@+id/imageViewDetHerr"
@@ -106,7 +107,7 @@
                 app:layout_constraintHorizontal_bias="0.487"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.601">
+                app:layout_constraintVertical_bias="0.603">
 
                 <TableLayout
                     android:layout_width="350dp"
@@ -207,7 +208,7 @@
                             android:singleLine="false"
                             android:text="Descripcion"
                             android:textColor="@color/grisOscuro"
-                            android:textSize="16sp" />
+                            android:textSize="14sp" />
                     </TableRow>
 
                     <TableRow

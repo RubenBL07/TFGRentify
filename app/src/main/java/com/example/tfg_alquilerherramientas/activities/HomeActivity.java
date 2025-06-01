@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerReservas.setLayoutManager(layoutManager);
+
         adapter = new RecyclerAdapterReservas(this, listaReservas, (item, position) -> {
             Intent intent = new Intent(HomeActivity.this, DetallesReservaActivity.class);
             intent.putExtra("reserva", item);
@@ -81,11 +82,12 @@ public class HomeActivity extends AppCompatActivity {
                     listaReservas.clear();
                     List<Reserva> reservas = response.body();
                     if (reservas != null) {
-                        Collections.reverse(reservas);
                         listaReservas.addAll(reservas);
+                        Collections.reverse(listaReservas);
                         adapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(HomeActivity.this, "No hay reservas disponibles", Toast.LENGTH_SHORT).show();
                     }
-
                 } else {
                     Log.e("Reservas", "Respuesta no exitosa");
                     Toast.makeText(HomeActivity.this, "No hay reservas disponibles", Toast.LENGTH_SHORT).show();
@@ -125,6 +127,8 @@ public class HomeActivity extends AppCompatActivity {
 
             if (cliente.getEmail().equals("admin@gmail.com") && cliente.getPassword().equals("admin")) {
                 popupMenu.getMenu().add("Crear herramienta");
+                popupMenu.getMenu().add("Dar de baja herramienta");
+
             }
 
             popupMenu.setOnMenuItemClickListener(item -> {
@@ -136,6 +140,12 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 } else if (titulo.equals("Crear herramienta")) {
                     Intent intent = new Intent(this, CrearHerramientaActivity.class);
+                    intent.putExtra("cliente", cliente);
+                    startActivity(intent);
+                    return true;
+                } else if (titulo.equals("Administrar herramientas")) {
+                    Intent intent = new Intent(this, DarDeBajaHerramientaActivity.class);
+                    intent.putExtra("cliente", cliente);
                     startActivity(intent);
                     return true;
                 }

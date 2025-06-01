@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +22,7 @@ import com.example.tfg_alquilerherramientas.retrofit.ApiClient;
 import com.example.tfg_alquilerherramientas.retrofit.HerramientaApiService;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -57,7 +59,7 @@ public class HerramientasActivity extends AppCompatActivity {
 
         HerramientaApiService apiService = ApiClient.getRetrofit().create(HerramientaApiService.class);
 
-        apiService.getAllHerramientas().enqueue(new Callback<List<Herramienta>>() {
+        apiService.getAllHerramientasActivas().enqueue(new Callback<List<Herramienta>>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(@NonNull Call<List<Herramienta>> call, @NonNull Response<List<Herramienta>> response) {

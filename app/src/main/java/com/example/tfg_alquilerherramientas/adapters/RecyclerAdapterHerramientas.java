@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -75,7 +76,6 @@ public class RecyclerAdapterHerramientas extends RecyclerView.Adapter<RecyclerAd
         } else {
             holder.imageViewHerramienta.setImageResource(R.drawable.logo_background);
         }
-
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
