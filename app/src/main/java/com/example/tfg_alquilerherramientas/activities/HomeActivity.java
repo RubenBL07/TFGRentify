@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity {
 
             if (cliente.getEmail().equals("admin@gmail.com") && cliente.getPassword().equals("admin")) {
                 popupMenu.getMenu().add("Crear herramienta");
-                popupMenu.getMenu().add("Dar de baja herramienta");
+                popupMenu.getMenu().add("Administrar herramientas");
 
             }
 

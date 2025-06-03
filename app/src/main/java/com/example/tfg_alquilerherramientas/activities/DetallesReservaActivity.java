@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +24,9 @@ import com.google.android.material.button.MaterialButton;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 import retrofit2.Call;
@@ -39,6 +41,8 @@ public class DetallesReservaActivity extends AppCompatActivity {
     private Herramienta herramienta;
     private Reserva reserva;
     private Cliente cliente;
+    private BigDecimal precioTotalCalculado;
+    private static final DateTimeFormatter ISO_FMT = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -68,71 +72,75 @@ public class DetallesReservaActivity extends AppCompatActivity {
                 .into(imagenHerramienta);
 
         textNombreHerramienta.setText(herramienta.getNombre());
-        textFechaInicio.setText(String.valueOf(reserva.getFechaInicio()).substring(0, 16).replace("T", " "));
-        if (reserva.getFechaFin() != null) {
-            textFechaFin.setText(String.valueOf(reserva.getFechaFin()).substring(0, 16).replace("T", " "));
-        } else {
-            textFechaFin.setText("-");
-        }
-
         textPrecioDia.setText(herramienta.getPrecioDia() + "€");
+
+        textFechaInicio.setText(reserva.getFechaInicio().toString().substring(0, 16).replace("T", " "));
+
+        if (reserva.getEstado().equals("ACTIVA")) {
+            textFechaFin.setText("-");
+        } else {
+            if (reserva.getFechaFin() != null) {
+                textFechaFin.setText(reserva.getFechaFin().toString().substring(0, 16).replace("T", " "));
+            } else {
+                textFechaFin.setText("-");
+            }
+        }
 
         if (reserva.getEstado().equals("ACTIVA")) {
             textEstado.setText(reserva.getEstado() + "✅");
             botonCancelarReserva.setEnabled(true);
-            botonCancelarReserva.setVisibility(View.VISIBLE);
+            botonCancelarReserva.setVisibility(MaterialButton.VISIBLE);
         } else {
             textEstado.setText(reserva.getEstado() + "❌");
             botonCancelarReserva.setEnabled(false);
-            botonCancelarReserva.setVisibility(View.INVISIBLE);
+            botonCancelarReserva.setVisibility(MaterialButton.INVISIBLE);
         }
 
-        if (reserva.getEstado().equals("ACTIVA")) {
-            long dias = ChronoUnit.DAYS.between(reserva.getFechaInicio(), LocalDateTime.now());
-            if (dias <= 0) dias = 1;
-            BigDecimal total = herramienta.getPrecioDia().multiply(BigDecimal.valueOf(dias));
-            textPrecioTotal.setText(total + "€");
-        } else {
-            textPrecioTotal.setText(reserva.getPrecioTotal() + "€");
-        }
+        actualizarPrecioTotal();
 
         botonBack.setOnClickListener(v -> finish());
 
         botonCancelarReserva.setOnClickListener(v -> {
+            BigDecimal totalAhora = calcularPrecioTotal();
+
+            LocalDateTime fechaFin = ZonedDateTime.now(ZoneId.of("Europe/Madrid")).toLocalDateTime();
+            String fechaFinStr = fechaFin.format(ISO_FMT);
+
+            reserva.setFechaFin(fechaFin);
+            textFechaFin.setText(fechaFin.toString().substring(0, 16).replace("T", " "));
+
             String estadoAnterior = reserva.getEstado();
             reserva.setEstado("FINALIZADA");
+            textEstado.setText(reserva.getEstado() + "❌");
+            botonCancelarReserva.setEnabled(false);
 
-            long dias = ChronoUnit.DAYS.between(reserva.getFechaInicio(), LocalDateTime.now());
-            if (dias <= 0) dias = 1;
-            BigDecimal total = herramienta.getPrecioDia().multiply(BigDecimal.valueOf(dias));
-
-            reserva.setPrecioTotal(total);
-            cliente.setSaldo(cliente.getSaldo().subtract(total));
+            reserva.setPrecioTotal(totalAhora);
+            cliente.setSaldo(cliente.getSaldo().subtract(totalAhora));
 
             ReservaApiService reservaService = ApiClient.getRetrofit().create(ReservaApiService.class);
             ClienteApiService clienteService = ApiClient.getRetrofit().create(ClienteApiService.class);
 
-            reservaService.finalizarReserva(reserva.getId()).enqueue(new Callback<Boolean>() {
+            reservaService.finalizarReserva(reserva.getId(), fechaFinStr, totalAhora).enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
                         clienteService.updateSaldoCliente(cliente.getId(), cliente.getSaldo()).enqueue(new Callback<Boolean>() {
                             @Override
                             public void onResponse(Call<Boolean> call, Response<Boolean> respSaldo) {
-                                if (respSaldo.isSuccessful()) {
+                                if (respSaldo.isSuccessful() && Boolean.TRUE.equals(respSaldo.body())) {
                                     Log.d("SALDO", "Saldo actualizado correctamente");
                                     Toast.makeText(DetallesReservaActivity.this, "Reserva finalizada con éxito", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.e("SALDO", "Error al actualizar saldo, código: " + respSaldo.code());
                                     Toast.makeText(DetallesReservaActivity.this, "Fallo al actualizar saldo", Toast.LENGTH_SHORT).show();
                                 }
-                                lanzarHome();
+                                volverAHome();
                             }
                             @Override
                             public void onFailure(Call<Boolean> call, Throwable t) {
                                 Log.e("SALDO", "Fallo de red al actualizar saldo", t);
                                 Toast.makeText(DetallesReservaActivity.this, "Error de conexión al actualizar saldo", Toast.LENGTH_SHORT).show();
-                                lanzarHome();
+                                volverAHome();
                             }
                         });
                     } else {
@@ -149,7 +157,31 @@ public class DetallesReservaActivity extends AppCompatActivity {
         });
     }
 
-    private void lanzarHome() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+        actualizarPrecioTotal();
+    }
+
+    private BigDecimal calcularPrecioTotal() {
+        long dias = ChronoUnit.DAYS.between(reserva.getFechaInicio(), LocalDateTime.now().plusDays(1));
+        if (dias <= 0) {
+            dias = 1;
+        }
+        return herramienta.getPrecioDia().multiply(BigDecimal.valueOf(dias));
+    }
+    
+    private void actualizarPrecioTotal() {
+        if (reserva.getEstado().equals("ACTIVA")) {
+            precioTotalCalculado = calcularPrecioTotal();
+            textPrecioTotal.setText(precioTotalCalculado + "€");
+        } else {
+            precioTotalCalculado = reserva.getPrecioTotal();
+            textPrecioTotal.setText(precioTotalCalculado + "€");
+        }
+    }
+
+    private void volverAHome() {
         Intent intent = new Intent(DetallesReservaActivity.this, HomeActivity.class);
         intent.putExtra("herramienta", herramienta);
         intent.putExtra("cliente", cliente);
@@ -158,7 +190,8 @@ public class DetallesReservaActivity extends AppCompatActivity {
 
     private void revertirEstadoLocal(String estadoPrevio) {
         reserva.setEstado(estadoPrevio);
-        textEstado.setText(reserva.getEstado());
+        textEstado.setText(reserva.getEstado() + "✅");
         botonCancelarReserva.setEnabled(true);
+        actualizarPrecioTotal();
     }
 }

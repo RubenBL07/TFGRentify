@@ -22,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.059" />
+        app:layout_constraintVertical_bias="0.073" />
 
     <TextView
         android:id="@+id/textView24"
@@ -38,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.077" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -161,6 +161,8 @@
                     android:layout_width="340dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="7dp"
+                    android:background="@color/white"
+                    android:popupBackground="@color/gris"
                     android:spinnerMode="dialog" />
 
             </androidx.cardview.widget.CardView>
@@ -183,6 +185,8 @@
                     android:layout_width="340dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="7dp"
+                    android:background="@color/white"
+                    android:popupBackground="@color/gris"
                     android:spinnerMode="dialog" />
             </androidx.cardview.widget.CardView>
 

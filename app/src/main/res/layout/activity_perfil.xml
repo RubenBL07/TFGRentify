@@ -22,7 +22,7 @@
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.076" />
+        app:layout_constraintVertical_bias="0.091" />
 
     <TextView
         android:id="@+id/textView6"
@@ -38,7 +38,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.587" />
+        app:layout_constraintVertical_bias="0.706" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView21"
@@ -149,6 +149,7 @@
                     android:fontFamily="@font/golos_text_medium"
                     android:text="Nombre:"
                     android:textAlignment="center"
+                    android:textColor="@color/grisOscuro"
                     android:textSize="18sp" />
             </androidx.cardview.widget.CardView>
 
@@ -173,6 +174,7 @@
                     android:layout_margin="12dp"
                     android:fontFamily="@font/golos_text_medium"
                     android:text="Saldo:"
+                    android:textColor="@color/grisOscuro"
                     android:textSize="18dp" />
             </androidx.cardview.widget.CardView>
 
@@ -195,6 +197,7 @@
                     android:layout_margin="12dp"
                     android:fontFamily="@font/golos_text_medium"
                     android:text="Dirección: "
+                    android:textColor="@color/grisOscuro"
                     android:textSize="18dp" />
             </androidx.cardview.widget.CardView>
 
@@ -219,6 +222,7 @@
                     android:layout_margin="12dp"
                     android:fontFamily="@font/golos_text_medium"
                     android:text="Email:"
+                    android:textColor="@color/grisOscuro"
                     android:textSize="18dp" />
             </androidx.cardview.widget.CardView>
 

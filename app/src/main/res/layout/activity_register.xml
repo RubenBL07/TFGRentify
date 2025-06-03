@@ -16,7 +16,7 @@
         android:scaleX="0.5"
         android:scaleY="0.5"
         android:src="@mipmap/back_foreground"
-        android:tint="@color/verde_oscuro"
+        android:tint="@color/gris"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.085"
@@ -26,19 +26,19 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="310dp"
+        android:layout_width="238dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/golos_text_bold"
         android:text="Crea una cuenta"
         android:textAlignment="center"
         android:textColor="@color/verde_oscuro"
-        android:textSize="39sp"
+        android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.148" />
+        app:layout_constraintVertical_bias="0.132" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -103,7 +103,7 @@
                     android:inputType="text"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grisOscuro"
-                    android:textColorHint="#929292"
+                    android:textColorHint="#888888"
                     android:textSize="16sp" />
             </androidx.cardview.widget.CardView>
 
@@ -136,6 +136,7 @@
                     android:inputType="text"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888"
                     android:textSize="16sp" />
 
             </androidx.cardview.widget.CardView>
@@ -169,6 +170,7 @@
                     android:inputType="text"
                     android:textAlignment="viewStart"
                     android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888"
                     android:textSize="16sp" />
             </androidx.cardview.widget.CardView>
 
@@ -198,6 +200,7 @@
                     android:inputType="textMultiLine"
                     android:singleLine="false"
                     android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888"
                     android:textSize="16dp" />
             </androidx.cardview.widget.CardView>
 

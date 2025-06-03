@@ -33,7 +33,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BillingActivity extends AppCompatActivity {
-    private ImageButton botonHome, botonBuscar;
+    private ImageButton botonHome, botonBuscar, botonBack;
     private RecyclerView recyclerPagos;
     private RecyclerAdapterPagos adapterPagos;
     private Cliente cliente;
@@ -56,6 +56,7 @@ public class BillingActivity extends AppCompatActivity {
             return;
         }
 
+        botonBack = findViewById(R.id.imageButtonBackBill);
         botonBuscar = findViewById(R.id.imageButtonBuscarBill);
         botonHome = findViewById(R.id.imageButtonHomeBill);
         recyclerPagos = findViewById(R.id.recyclerBill);
@@ -92,6 +93,14 @@ public class BillingActivity extends AppCompatActivity {
             }
         });
 
+        botonBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), HomeActivity.class);
+                intent.putExtra("cliente", cliente);
+                startActivity(intent);
+            }
+        });
 
         botonBuscar.setOnClickListener(new View.OnClickListener() {
             @Override

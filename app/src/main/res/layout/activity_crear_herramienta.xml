@@ -22,13 +22,13 @@
         app:layout_constraintHorizontal_bias="0.046"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
+        app:layout_constraintVertical_bias="0.08" />
 
     <TextView
         android:id="@+id/textView22"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="68dp"
         android:fontFamily="@font/golos_text_bold"
         android:text="CREA UNA NUEVA HERRAMIENTA"
         android:textAlignment="center"
@@ -100,7 +100,8 @@
                     android:fontFamily="@font/golos_text"
                     android:hint="Nombre de la herramienta"
                     android:inputType="text"
-                    android:textColor="@color/grisOscuro" />
+                    android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -127,7 +128,8 @@
                     android:fontFamily="@font/golos_text"
                     android:hint="Imagen URL"
                     android:inputType="text"
-                    android:textColor="@color/grisOscuro" />
+                    android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -156,7 +158,8 @@
                     android:hint="Descripción"
                     android:inputType="textMultiLine"
                     android:singleLine="false"
-                    android:textColor="@color/grisOscuro" />
+                    android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888" />
 
             </androidx.cardview.widget.CardView>
 
@@ -184,7 +187,8 @@
                     android:fontFamily="@font/golos_text"
                     android:hint="Categoría"
                     android:inputType="text"
-                    android:textColor="@color/grisOscuro" />
+                    android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -212,7 +216,8 @@
                     android:hint="Precio/día"
                     android:inputType="numberDecimal"
                     android:textAlignment="center"
-                    android:textColor="@color/grisOscuro" />
+                    android:textColor="@color/grisOscuro"
+                    android:textColorHint="#888888" />
             </androidx.cardview.widget.CardView>
 
             <TextView

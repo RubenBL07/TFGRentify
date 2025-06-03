@@ -35,6 +35,7 @@ public interface ReservaApiService {
     public Call<Boolean> updateReserva(@Query("id") Long id, @Body Reserva reserva);
 
     @PUT("/api/reservas/finalizar")
-    public Call<Boolean> finalizarReserva(@Query("id") Long id);
+    public Call<Boolean> finalizarReserva(@Query("id") Long id, @Query("fechaFin") String fechaFin,
+                                          @Query("precioTotal") BigDecimal precioTotal);
 
 }
